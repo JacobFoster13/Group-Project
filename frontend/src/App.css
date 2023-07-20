@@ -2,6 +2,31 @@
   text-align: center;
 }
 
+.row .ms-Label{
+  color: white;
+}
+a{
+  color: white !important;
+}
+.container{
+  background-image: url("./Images/ReactBackGround.avif");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+}
+.loginButtons{
+  width: 20rem;
+}
+.loginContainer{
+  padding: 5rem;
+}
+.textBox{
+  margin: 1rem;
+  height: 2rem;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

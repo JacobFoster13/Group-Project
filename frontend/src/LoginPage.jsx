@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
-import './../App.css';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { TextField } from '@fluentui/react';
 //import { Button} from '@fluentui/react-components';
 import Button from '@mui/material/Button';
-
-
 import {FaCartArrowDown} from "react-icons/fa";
 import Modal from 'react-modal';
 
