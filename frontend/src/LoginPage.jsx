@@ -6,6 +6,7 @@ import { TextField } from '@fluentui/react';
 import Button from '@mui/material/Button';
 import {FaCartArrowDown} from "react-icons/fa";
 import Modal from 'react-modal';
+import axios from 'axios'
 
 const customStyles = {
   content: {
@@ -42,8 +43,18 @@ function LoginPage() {
 
   }
 
-  function verifyLoginDetails(){
-    //location.href='/ProjectPage';
+  function verifyLoginDetails () {
+    axios.get('/login/', {
+        params: {
+            user: user.loginName,
+            password: user.password
+        }
+    })
+    .then((response) => {
+        if (response.status === 200) {
+            console.log(response.data)
+        }
+    })
   }
 
   function handleChange(event){
@@ -84,7 +95,7 @@ function LoginPage() {
             </div>
             <br></br>
             <div className='row'>
-              <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={verifyLoginDetails()}>Login</Button>              
+              <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={verifyLoginDetails}>Login</Button>              
             </div><br></br>
             <div className='row'>
               <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={openModal}>New user? Sign Up here</Button>              
