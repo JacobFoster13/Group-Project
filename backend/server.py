@@ -15,6 +15,9 @@ client = pymongo.MongoClient(DB_STRING)
 db = client['pythonTest']
 CORS(app)
 
+def return_json(message):
+    return json.dumps({"Message": str(message)}, indent=4)
+
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     if request.method == 'GET':
@@ -25,11 +28,31 @@ def login():
         try:
             checker = next(db.users.find({'_id': str(user)}))
             if checker['password'] == password:
-                return json.dumps({'message': 'ConfirmKey'}, indent=4)
+                return return_json('ConfirmKey')
         except:
-            return json.dumps({"Message": "Access Denied"}, indent=4)
+            return return_json("Access Denied")
     else:
         return 'LOL'
+
+@app.route('/signup/', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'GET':
+        args = request.args
+        user, first, last, email, password = args['user'], args['first'], args['last'], args['email'], args['password']
+        try:
+            checker = next(db.users.find({'_id': str(user)}))
+            return return_json("There is already a user with this username")
+        except:
+            newUser = {
+                '_id': user,
+                'fname': first,
+                'lname': last,
+                'email': email,
+                'password': password,
+                'projects': list()
+            }
+            db.users.insert_one(newUser)
+            return return_json("ConfirmKey")
 
 
 if __name__ == "__main__":

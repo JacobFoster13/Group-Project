@@ -39,8 +39,21 @@ function LoginPage() {
   function closeModal() {
     setIsOpen(false);
   }
-  function saveLoginDetails(){
-
+  function saveLoginDetails () {
+    axios.get('/signup/', {
+        params: {
+            user: user.loginName,
+            first: user.firstName,
+            last: user.lastName,
+            email: user.email,
+            password: user.password
+        }
+    })
+    .then((response) => {
+        if (response.status === 200) {
+            console.log(response.data)
+        }
+    })
   }
 
   function verifyLoginDetails () {
@@ -146,7 +159,7 @@ function LoginPage() {
                     onChange={(e)=>handleChange(e)}
                   />
                   <br></br>
-                  <Button variant='outlined' onClick={saveLoginDetails()}>Sign Up</Button>
+                  <Button variant='outlined' onClick={saveLoginDetails}>Sign Up</Button>
                 </form>
               </Modal>
             </div>
