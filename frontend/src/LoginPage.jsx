@@ -69,10 +69,10 @@ function LoginPage() {
           <div className='col-md-4'></div>
           <div className='col-md-4 loginContainer'>
             <div className='row'>
-              <h3 style={{color: 'white'}}>Sign In to access the APAD Project</h3>
+              <h3 style={{color: 'black'}}>Sign In to access the APAD Project</h3>
             </div>
             <div className="row">
-              <FaCartArrowDown size={100} style={{color: 'white', marginTop:'2rem'}}/>
+              <FaCartArrowDown size={100} style={{color: 'black', marginTop:'2rem'}}/>
             </div>
             <div className='row'>
               <TextField
@@ -95,10 +95,10 @@ function LoginPage() {
             </div>
             <br></br>
             <div className='row'>
-              <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={verifyLoginDetails}>Login</Button>              
+              <Button className='loginButtons' variant='outlined' style={{color:'black', border:'1px solid white'}} onClick={verifyLoginDetails}>Login</Button>              
             </div><br></br>
             <div className='row'>
-              <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={openModal}>New user? Sign Up here</Button>              
+              <Button className='loginButtons' variant='outlined' style={{color:'black', border:'1px solid white'}} onClick={openModal}>New user? Sign Up here</Button>              
               <Modal
                 isOpen={modalIsOpen}
                 onAfterOpen={afterOpenModal}
