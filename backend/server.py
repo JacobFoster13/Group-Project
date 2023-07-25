@@ -6,6 +6,7 @@ from flask_cors import CORS
 import pymongo
 from dotenv import load_dotenv
 import os
+import passwordEncrypt
 
 load_dotenv()
 DB_STRING = os.getenv("DB_STRING")
@@ -28,11 +29,19 @@ def login():
         password = params.get('password')
         # print(data)
         # print(user)
-        # print(password)
 
         try:
             checker = next(db.users.find({'_id': str(user)}))
-            if checker['password'] == password:
+            
+            salt = checker['salt'].encode()
+            pwdEncrypt = passwordEncrypt.PasswordEncrypt(password)
+            encodedBytePwd = pwdEncrypt.encodePasswordByte()
+            hashedPwd = pwdEncrypt.generateHash(encodedBytePwd, salt)
+            
+            print(hashedPwd.decode())
+            print(checker['password'])
+            
+            if checker['password'] == hashedPwd.decode():
                 return return_json('ConfirmKey')
         except:
             return return_json("Access Denied")
@@ -51,12 +60,19 @@ def signup():
             checker = next(db.users.find({'_id': str(user)}))
             return return_json("There is already a user with this username")
         except:
+
+            pwdEncrypt = passwordEncrypt.PasswordEncrypt(password)
+            encodedBytePwd = pwdEncrypt.encodePasswordByte()
+            salt = pwdEncrypt.generateSalt()
+            hashedPwd = pwdEncrypt.generateHash(encodedBytePwd, salt)
+
             newUser = {
                 '_id': user,
                 'fname': first,
                 'lname': last,
                 'email': email,
-                'password': password,
+                'password': hashedPwd.decode(),
+                'salt': salt.decode(),
                 'projects': list()
             }
             db.users.insert_one(newUser)
