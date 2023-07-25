@@ -40,7 +40,7 @@ function LoginPage() {
     setIsOpen(false);
   }
   function saveLoginDetails () {
-    axios.get('/signup/', {
+    axios.post('/signup/', {
         params: {
             user: user.loginName,
             first: user.firstName,
@@ -57,7 +57,7 @@ function LoginPage() {
   }
 
   function verifyLoginDetails () {
-    axios.get('/login/', {
+    axios.post('/login/', {
         params: {
             user: user.loginName,
             password: user.password
