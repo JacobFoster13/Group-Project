@@ -53,6 +53,55 @@ a{
   color: #61dafb;
 }
 
+/*Styling for hardware sets page*/
+.hwSetsHeading{
+  text-align: center;
+  padding: 2rem;
+  color: white;
+}
+.hardwareSetContainer{
+  padding: 0 5rem !important;
+}
+.hardwareSetName{
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  color: white;
+  font-weight: 700;
+}
+.hwSetButtons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hwSetButton{
+  width: 10rem !important;
+  color: white !important;
+  font-weight: 700 !important;
+  margin: 2rem !important;
+  border: 1px solid white !important;
+}
+/*Styling for project container*/
+.projectContainer{
+  padding: 3rem !important;
+}
+.projectHeading{
+  text-align: center;
+  padding: 2rem;
+  color: white;
+}
+/*Styling for datatable*/
+.MuiDataGrid-columnHeaders{
+  font-weight: 700;
+}
+
+.dataTable{
+  background-color: white;
+  border-radius: 1rem;
+  margin-top: 2rem !important;
+  margin-left: 1rem;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
