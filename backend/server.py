@@ -7,12 +7,15 @@ import pymongo
 from dotenv import load_dotenv
 import os
 import passwordEncrypt
+import certifi
+
+ca=certifi.where()
 
 load_dotenv()
 DB_STRING = os.getenv("DB_STRING")
 
 app = Flask(__name__)
-client = pymongo.MongoClient(DB_STRING)
+client = pymongo.MongoClient(DB_STRING, tlsCAFile=ca)
 db = client['pythonTest']
 CORS(app)
 

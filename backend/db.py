@@ -1,12 +1,15 @@
 import pymongo
 from dotenv import load_dotenv
 import os
+import certifi
 
 load_dotenv()
 DB_STRING = os.getenv("DB_STRING")
 
+ca=certifi.where()
+
 # establish connection and create database
-client = pymongo.MongoClient(DB_STRING)
+client = pymongo.MongoClient(DB_STRING, tlsCAFile=ca)
 db = client['pythonTest']
 
 # input user data to users collection
