@@ -6,6 +6,7 @@ import { TextField } from '@fluentui/react';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 import { DataGrid } from '@mui/x-data-grid';
+import axios from 'axios';
 
 
 const customStyles = {
@@ -27,7 +28,10 @@ const rows = [
 ];
 
 const columns = [
-  { field: 'projectID', headerName: 'Project ID', width: 200 },
+  { field: 'projectID', headerName: 'Project ID', width: 200, 
+    renderCell: (params) => 
+    <a className="projectLink" href={"#/hardwareSets/" + params.row.projectID}>{params.row.projectID}</a>
+  },
   { field: 'projectName', headerName: 'Project Name', width: 300 },
   { field: 'hwSet1', headerName: 'Hardware Set 1', width: 150 },
   { field: 'hwSet2', headerName: 'Hardware Set 2', width: 150 }
@@ -36,11 +40,24 @@ const columns = [
 
 function ProjectPage() {
   const [project, setProject] = useState({
-    projectID: '',
+    projectID: 0,
     projectsData: [],
     projectName: '',
-    projectDescription: ''
+    projectDescription: '',
+    projectUsers : [],
+    loginName: "sg123"
   });
+  /* axios.get('/projects/', {
+      params: {
+          loginName: ""
+      }
+  })
+  .then((response) => {
+      if (response.status === 200) {
+          console.log(response.data);
+          window.location.href="#/ProjectPage"
+      }
+  }) */ 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -53,12 +70,37 @@ function ProjectPage() {
   function closeModal() {
     setIsOpen(false);
   }
-  function joinProject(){
 
+  function joinProject(){
+    // axios.post('/joinProjects',{
+    //   params: {
+    //     projectID: 1,
+    //     users: ["sy123","ab123"]
+    //   }
+    // }).then((response) =>{
+    //   if(response.status == 200) {
+    //     console.log(response.data);
+    //     window.location.href="#/hardwareSets/" + project.projectID
+    //   }
+    // })
   }
 
   function createProject(){
-
+    axios.post('/projects/', {
+        params: {
+            projectID: project.projectID,
+            projectName: project.projectName,
+            projectDescription: project.projectDescription,
+            creator: project.loginName,
+            users: [project.loginName]
+        }
+    })
+    .then((response) => {
+        if (response.status === 200) {
+            console.log(response.data);
+            window.location.href="#/hardwareSets/" + project.projectID
+        }
+    })
   }
 
   function handleChange(event){
@@ -66,13 +108,13 @@ function ProjectPage() {
       return { ...prevValues,[event.target.name]: event.target.value}
     });
     if(event.target.name === "projectName" || event.target.name === "projectDescription"){
-      setProjectID();
+      //setProjectID();
     }
   }
 
   function setProjectID(){
     let projectID = "";
-    projectID = project.projectName.substring(3) + project.projectDescription.trim().substring(3);
+    projectID = 1000;
     setProject( prevValues => {
       return { ...prevValues,'projectID': projectID}
     });
@@ -145,7 +187,6 @@ function ProjectPage() {
                   />
                   <TextField
                     label='Project ID'
-                    disabled
                     value={project.projectID}
                     name='projectID'
                     onChange={(e)=>handleChange(e)}

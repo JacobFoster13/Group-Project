@@ -81,6 +81,48 @@ def signup():
             db.users.insert_one(newUser)
             return return_json("ConfirmKey")
 
+@app.route('/projects/', methods=['POST'])
+def projects():
+    if request.method == 'POST':
+
+        data = request.get_json()
+        params = data['params']
+        projectID, projectName, projectDescription, creator, users = params.get('projectID'), params.get('projectName'), params.get('projectDescription'), params.get('creator'), params.get('users')
+
+        try:
+            newUser = {
+                'name': projectName,
+                'description': projectDescription,
+                'creator': creator,
+                'users' : users,
+                '_id': projectID        
+            }
+            db.projects.insert_one(newUser)
+            return return_json("ConfirmKey")
+        except:
+            return return_json("Error occured")
+        
+
+# @app.route('/joinProjects/', methods=['POST'])
+# def joinProjects():
+#     if request.method == 'POST':
+
+#         data = request.get_json()
+#         params = data['params']
+#         projectID, users = params.get('projectID'), params.get('users')
+#         try:            
+#             checkProject = next(db.projects.find({'_id': projectID}))
+#             print("Hello" + checkProject.users[0])
+#             usersArr = checkProject.users
+#             usersArr.append("sg123")
+#             myquery = { "_id": projectID }
+#             newvalues = { "$set": { "users": usersArr }}
+#             #db.projects.insert_one(newUser)
+#             db.projects.update_one(myquery, newvalues)
+#             return return_json("ConfirmKey")
+#         except:
+#             return return_json("Error occured")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

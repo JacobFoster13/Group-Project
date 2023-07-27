@@ -8,7 +8,7 @@
 a{
   color: white !important;
 }
-.container{
+.loginContainer{
   background-image: url("./Images/ReactBackGround.avif");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -17,7 +17,7 @@ a{
 .loginButtons{
   width: 20rem;
 }
-.loginContainer{
+.loginScreen{
   padding: 5rem;
 }
 .textBox{
@@ -25,6 +25,15 @@ a{
   height: 2rem;
   border-radius: 5px;
   border: 2px solid black;
+}
+.projectContainer{
+  background-color: #0147AB;
+}
+.projectLink{
+  color: blue !important;
+}
+#root{
+  background-color: #0147AB;
 }
 
 .App-logo {
