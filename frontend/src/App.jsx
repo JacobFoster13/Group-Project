@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />}/>
         <Route path="/ProjectPage" element={<ProjectPage />} />
-        <Route path="/HardwareSets" element={<HardwareSets />} />
+        <Route path="/HardwareSets/:id" element={<HardwareSets />} />
       </Routes>
     </HashRouter>
   );

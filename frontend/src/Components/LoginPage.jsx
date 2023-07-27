@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { TextField } from '@fluentui/react';
 //import { Button} from '@fluentui/react-components';
 import Button from '@mui/material/Button';
-import {FaCartArrowDown} from "react-icons/fa";
+import {FaCartArrowDown, FaWindowClose} from "react-icons/fa";
 import Modal from 'react-modal';
 import axios from 'axios'
 
@@ -51,7 +51,8 @@ function LoginPage() {
     })
     .then((response) => {
         if (response.status === 200) {
-            console.log(response.data)
+            console.log(response.data);
+            window.location.href="#/ProjectPage"
         }
     })
   }
@@ -65,7 +66,8 @@ function LoginPage() {
     })
     .then((response) => {
         if (response.status === 200) {
-            console.log(response.data)
+            console.log(response.data);
+            window.location.href="#/ProjectPage"
         }
     })
   }
@@ -77,10 +79,10 @@ function LoginPage() {
   }
 
   return (
-    <div className="container">  
+    <div className="container loginContainer">  
         <div className="row">  
           <div className='col-md-4'></div>
-          <div className='col-md-4 loginContainer'>
+          <div className='col-md-4 loginScreen'>
             <div className='row'>
               <h3 style={{color: 'black'}}>Sign In to access the APAD Project</h3>
             </div>
