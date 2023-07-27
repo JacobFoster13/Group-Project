@@ -103,25 +103,29 @@ def projects():
             return return_json("Error occured")
         
 
-# @app.route('/joinProjects/', methods=['POST'])
-# def joinProjects():
-#     if request.method == 'POST':
-
-#         data = request.get_json()
-#         params = data['params']
-#         projectID, users = params.get('projectID'), params.get('users')
-#         try:            
-#             checkProject = next(db.projects.find({'_id': projectID}))
-#             print("Hello" + checkProject.users[0])
-#             usersArr = checkProject.users
-#             usersArr.append("sg123")
-#             myquery = { "_id": projectID }
-#             newvalues = { "$set": { "users": usersArr }}
-#             #db.projects.insert_one(newUser)
-#             db.projects.update_one(myquery, newvalues)
-#             return return_json("ConfirmKey")
-#         except:
-#             return return_json("Error occured")
+@app.route("/join_project/", methods=["POST"])
+def join_project():
+    if request.method == 'POST':
+        data = request.get_json()
+        params = data['params']
+        user = params.get('user')  # Corrected key to 'user'
+        project_id = int(params.get('projectID'))
+        print(user)
+        try:
+            project = db.projects.find_one({'_id': project_id})  # Use find_one() instead of find()
+            if not project:
+                return return_json("Project does not exist")
+            if user in project['users']:
+                return return_json("User is already in the project")
+            db.projects.update_one(
+                {'_id': project_id},
+                {'$push': {'users': user}}
+            )
+            return return_json("User successfully joined the project")
+        except:
+            return return_json("Error occurred while joining the project")
+    else:
+        return 'LOL'
 
 
 if __name__ == "__main__":

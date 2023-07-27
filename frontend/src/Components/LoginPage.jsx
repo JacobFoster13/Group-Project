@@ -71,7 +71,7 @@ function LoginPage() {
     .then((response) => {
         if (response.status === 200) {
             console.log(response.data);
-            navigate('/ProjectPage');
+            navigate('/ProjectPage', {state:{userId:user.loginName}});
         }
     })
   }

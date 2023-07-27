@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const customStyles = {
@@ -42,13 +42,15 @@ const columns = [
 function ProjectPage() {
 
   const navigate = useNavigate();
+  let {state} = useLocation();
+
   const [project, setProject] = useState({
     projectID: 0,
     projectsData: [],
     projectName: '',
     projectDescription: '',
     projectUsers : [],
-    loginName: "ab1234"
+    loginName: state.userId
   });
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -64,7 +66,36 @@ function ProjectPage() {
     setIsOpen(false);
   }
 
-  function joinProject(){
+  function joinProject() {
+    // Call the API endpoint to join the project using axios
+    axios.post('/join_project/', {
+      params: {
+        user: state.userId, // Replace with the actual user ID
+        projectID: project.projectID
+      }
+    })
+    .then(response => {
+      const data = response.data;
+      // Handle the response from the server
+      alert(data.Message); // Show a message with the server response
+      // If the join was successful, update the rows state to refresh the table
+      if (data.Message === 'User successfully joined the project') {
+        setRows(prevRows => [
+          ...prevRows,
+          {
+            id: prevRows.length + 1,
+            projectID: project.projectID,
+            projectName: 'Project Name', // Replace with the actual project name
+            hwSet1: '200',
+            hwSet2: '230'
+          }
+        ]);
+      }
+    })
+    .catch(error => {
+      console.error('Error joining project:', error);
+      alert('An error occurred while joining the project');
+    });
   }
 
   function createProject(){
