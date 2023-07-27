@@ -21,28 +21,36 @@ const customStyles = {
   },
 };
 
-const rows = [
-  { id: 1, projectID: 'TEST123', projectName: 'Test Project 1', hwSet1: '200', hwSet2: '230' },
-  { id: 2, projectID: 'TEST234', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
-  { id: 3, projectID: 'TEST345', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
-  { id: 4, projectID: 'TEST456', projectName: 'Test Project 4', hwSet1: '200', hwSet2: '230' },
-];
-
-const columns = [
-  { field: 'projectID', headerName: 'Project ID', width: 200, 
-    renderCell: (params) => 
-    <a className="projectLink" href={"#/hardwareSets/" + params.row.projectID}>{params.row.projectID}</a>
-  },
-  { field: 'projectName', headerName: 'Project Name', width: 300 },
-  { field: 'hwSet1', headerName: 'Hardware Set 1', width: 150 },
-  { field: 'hwSet2', headerName: 'Hardware Set 2', width: 150 }
-];
+// const rows = [
+//   { id: 1, projectID: 'TEST123', projectName: 'Test Project 1', hwSet1: '200', hwSet2: '230' },
+//   { id: 2, projectID: 'TEST234', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
+//   { id: 3, projectID: 'TEST345', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
+//   { id: 4, projectID: 'TEST456', projectName: 'Test Project 4', hwSet1: '200', hwSet2: '230' },
+// ];
 
 
 function ProjectPage() {
 
   const navigate = useNavigate();
   let {state} = useLocation();
+
+  const [rows, setRows] = useState([
+    // Initial rows data, you may fetch this from the server initially
+    { id: 1, projectID: 'TEST123', projectName: 'Test Project 1', hwSet1: '200', hwSet2: '230' },
+    { id: 2, projectID: 'TEST234', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
+    { id: 3, projectID: 'TEST345', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
+    { id: 4, projectID: 'TEST456', projectName: 'Test Project 4', hwSet1: '200', hwSet2: '230' },
+  ]);
+
+  const columns = [
+    { field: 'projectID', headerName: 'Project ID', width: 200, 
+      renderCell: (params) => 
+      <a className="projectLink" href={"/hardwareSets/" + params.row.projectID}>{params.row.projectID}</a>
+    },
+    { field: 'projectName', headerName: 'Project Name', width: 300 },
+    { field: 'hwSet1', headerName: 'Hardware Set 1', width: 150 },
+    { field: 'hwSet2', headerName: 'Hardware Set 2', width: 150 }
+  ];
 
   const [project, setProject] = useState({
     projectID: 0,
