@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const customStyles = {
@@ -39,25 +40,17 @@ const columns = [
 
 
 function ProjectPage() {
+
+  const navigate = useNavigate();
   const [project, setProject] = useState({
     projectID: 0,
     projectsData: [],
     projectName: '',
     projectDescription: '',
     projectUsers : [],
-    loginName: "sg123"
+    loginName: "ab1234"
   });
-  /* axios.get('/projects/', {
-      params: {
-          loginName: ""
-      }
-  })
-  .then((response) => {
-      if (response.status === 200) {
-          console.log(response.data);
-          window.location.href="#/ProjectPage"
-      }
-  }) */ 
+
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -72,17 +65,6 @@ function ProjectPage() {
   }
 
   function joinProject(){
-    // axios.post('/joinProjects',{
-    //   params: {
-    //     projectID: 1,
-    //     users: ["sy123","ab123"]
-    //   }
-    // }).then((response) =>{
-    //   if(response.status == 200) {
-    //     console.log(response.data);
-    //     window.location.href="#/hardwareSets/" + project.projectID
-    //   }
-    // })
   }
 
   function createProject(){
@@ -98,7 +80,7 @@ function ProjectPage() {
     .then((response) => {
         if (response.status === 200) {
             console.log(response.data);
-            window.location.href="#/hardwareSets/" + project.projectID
+            navigate('/hardwareSets')
         }
     })
   }
