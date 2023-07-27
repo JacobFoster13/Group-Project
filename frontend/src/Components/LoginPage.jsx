@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import {FaCartArrowDown} from "react-icons/fa";
 import Modal from 'react-modal';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const customStyles = {
   content: {
@@ -27,6 +28,9 @@ function LoginPage() {
     lastName: '',
     email: ''
   });
+
+  const navigate = useNavigate();
+
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -57,6 +61,7 @@ function LoginPage() {
   }
 
   function verifyLoginDetails () {
+
     axios.post('/login/', {
         params: {
             user: user.loginName,
@@ -65,7 +70,8 @@ function LoginPage() {
     })
     .then((response) => {
         if (response.status === 200) {
-            console.log(response.data)
+            console.log(response.data);
+            navigate('/ProjectPage');
         }
     })
   }
