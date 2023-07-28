@@ -113,7 +113,7 @@ function ProjectPage() {
             projectName: project.projectName,
             projectDescription: project.projectDescription,
             creator: project.loginName,
-            users: [project.loginName]
+            user: project.loginName
         }
     })
     .then((response) => {
