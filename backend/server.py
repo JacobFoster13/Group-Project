@@ -84,23 +84,30 @@ def signup():
 @app.route('/projects/', methods=['POST'])
 def projects():
     if request.method == 'POST':
-
         data = request.get_json()
         params = data['params']
-        projectID, projectName, projectDescription, creator, users = params.get('projectID'), params.get('projectName'), params.get('projectDescription'), params.get('creator'), params.get('users')
+        projectID, projectName, projectDescription, creator, users = int(params.get('projectID')), params.get('projectName'), params.get('projectDescription'), params.get('creator'), params.get('users')
 
         try:
             newUser = {
                 'name': projectName,
                 'description': projectDescription,
                 'creator': creator,
-                'users' : users,
+                'users': [users],  # Wrap 'users' in a list to make it a list of users
                 '_id': projectID        
             }
             db.projects.insert_one(newUser)
+            
+            # Update the user's document in the 'users' collection to include the new projectID
+            db.users.update_one(
+                {'_id': creator},  # Use {'_id': creator} instead of {'_id': users'}
+                {'$push': {'projects': projectID}}
+            )
+            
             return return_json("ConfirmKey")
         except:
-            return return_json("Error occured")
+            return return_json("Error occurred")
+
         
 
 @app.route("/join_project/", methods=["POST"])
@@ -120,6 +127,10 @@ def join_project():
             db.projects.update_one(
                 {'_id': project_id},
                 {'$push': {'users': user}}
+            )
+            db.users.update_one(
+                {'_id': user},
+                {'$push': {'projects': project_id}}
             )
             return return_json("User successfully joined the project")
         except:
