@@ -86,17 +86,17 @@ def projects():
     if request.method == 'POST':
         data = request.get_json()
         params = data['params']
-        projectID, projectName, projectDescription, creator, users = int(params.get('projectID')), params.get('projectName'), params.get('projectDescription'), params.get('creator'), params.get('users')
+        projectID, projectName, projectDescription, creator, user = int(params.get('projectID')), params.get('projectName'), params.get('projectDescription'), params.get('creator'), params.get('user')
 
         try:
-            newUser = {
+            newProject = {
                 'name': projectName,
                 'description': projectDescription,
                 'creator': creator,
-                'users': [users],  # Wrap 'users' in a list to make it a list of users
+                'users': [user],  # Wrap 'users' in a list to make it a list of users
                 '_id': projectID        
             }
-            db.projects.insert_one(newUser)
+            db.projects.insert_one(newProject)
             
             # Update the user's document in the 'users' collection to include the new projectID
             db.users.update_one(
@@ -120,10 +120,13 @@ def join_project():
         print(user)
         try:
             project = db.projects.find_one({'_id': project_id})  # Use find_one() instead of find()
+
             if not project:
                 return return_json("Project does not exist")
-            if user in project['users']:
+            elif user in project['users']:
+                print(project['users'])
                 return return_json("User is already in the project")
+
             db.projects.update_one(
                 {'_id': project_id},
                 {'$push': {'users': user}}

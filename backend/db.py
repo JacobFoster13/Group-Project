@@ -15,7 +15,7 @@ db = client['pythonTest']
 # input user data to users collection
 user_col = db['users']
 users = [
-    {'_id': 'jf123', 'fname': 'Jacob', 'lname': 'Foster', 'email': 'jacob@jacob.com', 'password': '$2b$12$DRtA2TBI8D8mDHoV9G8vLe/DoQMJqMup6/7Ds76GqEkwqLb44MNIe', 'salt': '$2b$12$DRtA2TBI8D8mDHoV9G8vLe', 'projects': []},
+    {'_id': 'jf123', 'fname': 'Jacob', 'lname': 'Foster', 'email': 'jacob@jacob.com', 'password': '$2b$12$DRtA2TBI8D8mDHoV9G8vLe/DoQMJqMup6/7Ds76GqEkwqLb44MNIe', 'salt': '$2b$12$DRtA2TBI8D8mDHoV9G8vLe', 'projects': [1]},
     {'_id': 'ev123', 'fname': 'Enrique', 'lname': 'Villarreal', 'email': 'erique@enrique.com', 'password': '$2b$12$AGQui/lR.BvSIWv2VHerzO417NHYJ.B9FBUkp5NjJ94U3GJmXt5jW', 'salt': '$2b$12$AGQui/lR.BvSIWv2VHerzO', 'projects': []},
     {'_id': 'sg123', 'fname': 'Srishti', 'lname': 'Gupta', 'email': 'srishti@srishti.com', 'password': '$2b$12$HQOxvV47s89hT6wiGlheTeqhcXPVU/hpuvsW4Hy6hipYrayE6kEku', 'salt': '$2b$12$HQOxvV47s89hT6wiGlheTe', 'projects': []},
     {'_id': 'ab123', 'fname': 'Aishwarya', 'lname': 'Bhosle', 'email': 'aishwarya@aishwarya.com', 'password': '$2b$12$9fxyE9FKVymet6/pOGZUFOkNQ.qmpBbVGhl4xhpxsbopLYjIB3Gue', 'salt': '$2b$12$9fxyE9FKVymet6/pOGZUFO', 'projects': []},
