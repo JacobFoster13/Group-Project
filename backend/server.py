@@ -141,6 +141,39 @@ def join_project():
     else:
         return 'LOL'
 
+@app.route("/get_user_projects/", methods=["POST"])
+def get_user_projects():
+    if request.method == 'POST':
+        data = request.get_json()
+        params = data['params']
+        user = params.get('user')
+
+        try:
+
+            collection = db.projects
+
+            # Query find in the collection HWSet1
+            result = collection.find({'users':'sy123'})
+
+            documents_list = list(result)
+            print(documents_list)
+
+            if (len(documents_list) == 0):
+                return None
+            else:
+                dataTable = []
+                counter = 1
+                for document in documents_list:
+                    rows = {'id':counter, 'projectID': document['_id'], 'projectName': document['name'], 'hwSet1': document['hardware'][0], 'hwSet2': document['hardware'][1]}
+                    dataTable.append(rows)
+                    counter += 1
+
+                print(dataTable)
+                return dataTable
+        except:
+            return return_json("Error occurred while loading the projects")
+    else:
+        return 'LOL'
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -28,12 +28,14 @@ a{
 }
 .projectContainer{
   background-color: #0147AB;
+  background-size: cover;
 }
 .projectLink{
   color: blue !important;
 }
 #root{
   background-color: #0147AB;
+  background-size: cover;
 }
 
 .App-logo {
