@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { TextField } from '@fluentui/react';
@@ -21,26 +21,39 @@ const customStyles = {
   },
 };
 
-// const rows = [
-//   { id: 1, projectID: 'TEST123', projectName: 'Test Project 1', hwSet1: '200', hwSet2: '230' },
-//   { id: 2, projectID: 'TEST234', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
-//   { id: 3, projectID: 'TEST345', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
-//   { id: 4, projectID: 'TEST456', projectName: 'Test Project 4', hwSet1: '200', hwSet2: '230' },
-// ];
-
-
 function ProjectPage() {
 
   const navigate = useNavigate();
   let {state} = useLocation();
 
-  const [rows, setRows] = useState([
-    // Initial rows data, you may fetch this from the server initially
-    { id: 1, projectID: 'TEST123', projectName: 'Test Project 1', hwSet1: '200', hwSet2: '230' },
-    { id: 2, projectID: 'TEST234', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
-    { id: 3, projectID: 'TEST345', projectName: 'Test Project 3', hwSet1: '200', hwSet2: '230' },
-    { id: 4, projectID: 'TEST456', projectName: 'Test Project 4', hwSet1: '200', hwSet2: '230' },
-  ]);
+  const [userProjects, setUserProjects] = useState([]);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    // Function to fetch user projects from Flask server
+    const fetchUserProjects = async () => {
+      try {
+        const response = await axios.post('/get_user_projects/', {
+          params: {
+            user: state.userId
+          }
+        });
+        setUserProjects(response.data);
+      } catch (error) {
+        console.error('Error fetching user projects:', error);
+      }
+    };
+
+    // Call the function to fetch user projects when the component mounts
+    fetchUserProjects();
+  }, []);
+
+  // Update the rows state after userProjects has been fetched
+  useEffect(() => {
+    setRows(userProjects);
+  }, [userProjects]);
+
+  console.log(userProjects);
 
   const columns = [
     { field: 'projectID', headerName: 'Project ID', width: 200, 

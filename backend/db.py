@@ -24,11 +24,11 @@ users = [
 
 proj_col = db['projects']
 projects = [
-    {'_id': 1, 'name': 'Jacob First Project', 'description': 'This is the first project', 'users': ['jf123'], 'creator': 'jf123', 'hardware': []},
-    {'_id': 2, 'name': 'Enrique First Project', 'description': 'This is the first project', 'users': ['ev123'], 'creator': 'ev123', 'hardware': []},
-    {'_id': 3, 'name': 'Srishti First Project', 'description': 'This is the first project', 'users': ['sg123'], 'creator': 'sg123', 'hardware': []},
-    {'_id': 4, 'name': 'Aishwarya First Project', 'description': 'This is the first project', 'users': ['ab123'], 'creator': 'ab123', 'hardware': []},
-    {'_id': 5, 'name': 'Suhas First Project', 'description': 'This is the first project', 'users': ['sy123'], 'creator': 'sy123', 'hardware': []}
+    {'_id': 1, 'name': 'Jacob First Project', 'description': 'This is the first project', 'users': ['jf123'], 'creator': 'jf123', 'hardware': [100, 200]},
+    {'_id': 2, 'name': 'Enrique First Project', 'description': 'This is the first project', 'users': ['ev123'], 'creator': 'ev123', 'hardware': [200, 300]},
+    {'_id': 3, 'name': 'Srishti First Project', 'description': 'This is the first project', 'users': ['sg123'], 'creator': 'sg123', 'hardware': [50, 150]},
+    {'_id': 4, 'name': 'Aishwarya First Project', 'description': 'This is the first project', 'users': ['ab123'], 'creator': 'ab123', 'hardware': [150, 50]},
+    {'_id': 5, 'name': 'Suhas First Project', 'description': 'This is the first project', 'users': ['sy123'], 'creator': 'sy123', 'hardware': [200, 50]}
 ]
 
 hardware_col = db['hardware']
