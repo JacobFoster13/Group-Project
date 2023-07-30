@@ -153,7 +153,7 @@ def get_user_projects():
             collection = db.projects
 
             # Query find in the collection HWSet1
-            result = collection.find({'users':'sy123'})
+            result = collection.find({'users':user})
 
             documents_list = list(result)
             print(documents_list)
