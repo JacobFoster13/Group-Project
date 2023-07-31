@@ -163,9 +163,7 @@ def get_user_projects():
                         'hwSet1': document['hardware'][0], 
                         'hwSet2': document['hardware'][1]
                         }
-                    # print("Rows:", rows)
                     dataTable.append(rows)
-                    print("data Table:", dataTable)
 
                 print("dataTable:", dataTable)
                 return dataTable
