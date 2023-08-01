@@ -157,7 +157,12 @@ def get_user_projects():
             else:
                 dataTable = []
                 for document in documents_list:
-                    rows = {'id':counter, 'projectID': document['_id'], 'projectName': document['name'], 'projectDescription': document['description'], 'hwSet1': document['hardware'][0], 'hwSet2': document['hardware'][1]}
+                    rows = {
+                        'id': document['_id'], 
+                        'projectName': document['name'], 
+                        'projectDescription': document['description'], 
+                        'hwSet1': document['hardware'][0], 
+                        'hwSet2': document['hardware'][1]}
                     
                     dataTable.append(rows)
 

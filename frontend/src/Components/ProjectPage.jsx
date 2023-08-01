@@ -58,11 +58,11 @@ function ProjectPage() {
   console.log(userProjects);
 
   const columns = [
-    { field: 'projectID', headerName: 'Project ID', width: 200, 
+    { field: 'id', headerName: 'Project ID', width: 200, 
       renderCell: (params) => 
-      <Link to="/hardwareSets" state= {{projectId: params.row.projectID,
+      <Link to="/hardwareSets" state= {{projectId: params.row.id,
         userId: state.userId, projectName:params.row.projectName, projectDescription:params.row.projectDescription}} className="projectLink">
-      {params.row.projectID}
+      {params.row.id}
     </Link>
     },
     { field: 'projectName', headerName: 'Project Name', width: 300 },
