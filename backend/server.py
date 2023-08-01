@@ -30,8 +30,6 @@ def login():
         params = data['params']
         user = params.get('user')
         password = params.get('password')
-        # print(data)
-        # print(user)
 
         try:
             checker = next(db.users.find({'_id': str(user)}))
@@ -40,9 +38,6 @@ def login():
             pwdEncrypt = passwordEncrypt.PasswordEncrypt(password)
             encodedBytePwd = pwdEncrypt.encodePasswordByte()
             hashedPwd = pwdEncrypt.generateHash(encodedBytePwd, salt)
-            
-            print(hashedPwd.decode())
-            print(checker['password'])
             
             if checker['password'] == hashedPwd.decode():
                 return return_json('ConfirmKey')
@@ -84,24 +79,24 @@ def signup():
 @app.route('/projects/', methods=['POST'])
 def projects():
     if request.method == 'POST':
-        data = request.get_json()
-        params = data['params']
-        projectID, projectName, projectDescription, creator, user = int(params.get('projectID')), params.get('projectName'), params.get('projectDescription'), params.get('creator'), params.get('user')
-
+        data = dict(request.get_json())
+        projectName, projectDescription, creator, user = data['projectName'], data['projectDescription'], data['creator'], data['user']
+        # automatically increment project ID
+        next_id = db.projects.find_one(sort=[('_id', -1)])['_id'] + 1
         try:
             newProject = {
                 'name': projectName,
                 'description': projectDescription,
                 'creator': creator,
                 'users': [user],  # Wrap 'users' in a list to make it a list of users
-                '_id': projectID        
+                '_id': next_id        
             }
             db.projects.insert_one(newProject)
             
             # Update the user's document in the 'users' collection to include the new projectID
             db.users.update_one(
                 {'_id': creator},  # Use {'_id': creator} instead of {'_id': users'}
-                {'$push': {'projects': projectID}}
+                {'$push': {'projects': next_id}}
             )
             
             return return_json("ConfirmKey")
@@ -117,7 +112,6 @@ def join_project():
         params = data['params']
         user = params.get('user')  # Corrected key to 'user'
         project_id = int(params.get('projectID'))
-        print(user)
         try:
             project = db.projects.find_one({'_id': project_id})  # Use find_one() instead of find()
 
@@ -156,19 +150,18 @@ def get_user_projects():
             result = collection.find({'users':user})
 
             documents_list = list(result)
-            print(documents_list)
+            print("doc list:", documents_list)
 
             if (len(documents_list) == 0):
                 return None
             else:
                 dataTable = []
-                counter = 1
                 for document in documents_list:
                     rows = {'id':counter, 'projectID': document['_id'], 'projectName': document['name'], 'projectDescription': document['description'], 'hwSet1': document['hardware'][0], 'hwSet2': document['hardware'][1]}
+                    
                     dataTable.append(rows)
-                    counter += 1
 
-                print(dataTable)
+                print("dataTable:", dataTable)
                 return dataTable
         except:
             return return_json("Error occurred while loading the projects")

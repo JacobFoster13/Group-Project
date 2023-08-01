@@ -39,6 +39,7 @@ function ProjectPage() {
             user: state.userId
           }
         });
+        console.log(response.data)
         setUserProjects(response.data);
       } catch (error) {
         console.error('Error fetching user projects:', error);
@@ -70,7 +71,6 @@ function ProjectPage() {
   ];
 
   const [project, setProject] = useState({
-    projectID: 0,
     projectsData: [],
     projectName: '',
     projectDescription: '',
@@ -125,13 +125,10 @@ function ProjectPage() {
 
   function createProject(){
     axios.post('/projects/', {
-        params: {
-            projectID: project.projectID,
-            projectName: project.projectName,
-            projectDescription: project.projectDescription,
-            creator: project.loginName,
-            user: project.loginName
-        }
+        projectName: project.projectName,
+        projectDescription: project.projectDescription,
+        creator: project.loginName,
+        user: project.loginName
     })
     .then((response) => {
         if (response.status === 200) {
@@ -148,14 +145,6 @@ function ProjectPage() {
     if(event.target.name === "projectName" || event.target.name === "projectDescription"){
       //setProjectID();
     }
-  }
-
-  function setProjectID(){
-    let projectID = "";
-    projectID = 1000;
-    setProject( prevValues => {
-      return { ...prevValues,'projectID': projectID}
-    });
   }
 
   return (
@@ -222,13 +211,7 @@ function ProjectPage() {
                     value={project.projectDescription}
                     name='projectDescription'
                     onChange={(e)=>handleChange(e)}
-                  />
-                  <TextField
-                    label='Project ID'
-                    value={project.projectID}
-                    name='projectID'
-                    onChange={(e)=>handleChange(e)}
-                  />              
+                  />         
                   <br></br>                          
                   <Button variant='outlined' onClick={createProject}>Create Project</Button>
                 </form>
