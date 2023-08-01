@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import './../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { TextField } from '@fluentui/react';
@@ -59,7 +60,10 @@ function ProjectPage() {
   const columns = [
     { field: 'projectID', headerName: 'Project ID', width: 200, 
       renderCell: (params) => 
-      <a className="projectLink" href={"/hardwareSets/" + params.row.projectID}>{params.row.projectID}</a>
+      <Link to="/hardwareSets" state= {{projectId: params.row.projectID,
+        userId: state.userId, projectName:params.row.projectName, projectDescription:params.row.projectDescription}} className="projectLink">
+      {params.row.projectID}
+    </Link>
     },
     { field: 'projectName', headerName: 'Project Name', width: 300 },
     { field: 'hwSet1', headerName: 'Hardware Set 1', width: 150 },
