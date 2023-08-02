@@ -2,121 +2,144 @@ import React, {useState, useEffect} from 'react';
 import './../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { TextField } from '@fluentui/react';
-//import { Button} from '@fluentui/react-components';
 import Button from '@mui/material/Button';
 import {useLocation, useNavigate} from 'react-router-dom';
-
+import axios from 'axios';
 
 function HardwareSets() {
   const navigate = useNavigate();
   let {state} = useLocation();
 
-  console.log(state);
-  const [hwSets, setHWSets] = useState({
-    projectID: '',
-    projectsData: [],
-    projectName: '',
-    projectDescription: '',
-    hwSet1: [],
-    hwSet2: []
-  });
+  const [hardware, setHardware] = useState([]);
+  let request = {};
 
   useEffect(() => {
-    if(state == null){
-      navigate('/')
+    if (state !== null) {
+      axios.get('/hardware/')
+      .then((response) => {
+        if (response.status === 200) {
+            setHardware(response.data)
+        }
+      })
     }
-    else{
-      //Code for hardware sets
-    }    
-  }, []);
+  }, [state]);
 
-  function handleChange(event){
-    setHWSets( prevValues => {
-      return { ...prevValues,[event.target.name]: event.target.value}
-    });
-
+  const updateRequest = (e, id) => {
+    let value = parseInt(e.target.value)
+    if (isNaN(value)) {
+        value = 0
+    }
+    request[`${id}`] = value
   }
 
   function checkIn(){
-
+    axios.post('/manageHardware/', {
+        user: state.userId,
+        request: request,
+        project: state.projectId,
+        operation: 'return'
+    })
+    .then((response) => {
+        if (response.data.Message === 'Success') {
+            alert("Successfully checked in hardware")
+            window.location.reload(false)
+        } else {
+            alert(response.data.Message)
+        }
+    })
   }
 
   function checkOut(){
-
+    axios.post('/manageHardware/', {
+        user: state.userId,
+        request: request,
+        project: state.projectId,
+        operation: 'request',
+    })
+    .then((response) => {
+        if (response.data.Message === 'Success') {
+            alert("Successfully checked out hardware")
+            window.location.reload(false)
+        } else {
+            alert(response.data.Message)
+        }
+    })
   }
 
-  const hwSetsData = [
-    { name: 'HW Set 1', capacity: 250, availability: 150, requested: 0 },
-    { name: 'HW Set 2', capacity: 300, availability: 250, requested: 0 }
-  ];
-
   return (
-    <div className="container hwSetsContainer">  
-        <div className="row">  
-          <div className='col-md-12'>
-            <div className='row'>
-              <h2 className='hwSetsHeading'>PROJECT NAME: {state == null? '' : state.projectName}</h2>
-              <h3 className='hwSetsHeading'>PROJECT ID: {state == null? '' : state.projectId}</h3>
-            </div>
-            <div className='row'>
-              <div className='hardwareSetContainer'>
-                <TextField
-                  label='Project Description:'
-                  required
-                  value = {state == null? '' : state.projectDescription}
-                  name='projectDesc'
-                  onChange={(e)=> handleChange(e)}       
-                  disabled
-                  multiline         
-                />
-              </div>
-            </div>            
-            <div className='row'>
-              <div className='col-md-12'>               
-                {hwSetsData.map((item)=>{
-                  return(
+    <>
+        {
+            state !== null ?
+            <div className="container hwSetsContainer">  
+                <div className="row">  
+                    <div className='col-md-12'>
+                        <div className='row'>
+                            <h2 className='hwSetsHeading'>PROJECT NAME: {state == null? '' : state.projectName}</h2>
+                            <h3 className='hwSetsHeading'>PROJECT ID: {state == null? '' : state.projectId}</h3>
+                        </div>
+                        <div className='row'>
+                            <div className='hardwareSetContainer'>
+                                <TextField
+                                    label='Project Description:'
+                                    value = {state == null? '' : state.projectDescription}
+                                    name='projectDesc'
+                                    readOnly
+                                    multiline         
+                                />
+                            </div>
+                        </div>            
                     <div className='row'>
-                      <div className='col-md-2 hardwareSetName'>
-                        {item.name}
-                      </div>
-                      <div className='col-md-3'>
-                        <TextField
-                          label='Capacity'
-                          value = {item.capacity}
-                          name='capacity'      
-                          disabled                                 
-                        />
-                      </div>
-                      <div className='col-md-3'>
-                        <TextField
-                          label='Available'
-                          value = {item.availability}
-                          name='Available'      
-                          disabled                                 
-                        />
-                      </div>
-                      <div className='col-md-3'>
-                        <TextField
-                          label='Request'
-                          required
-                          value = {item.availability}
-                          name='Request'
-                          onChange={(e)=>handleChange(e)}      
-                        />
-                      </div>
+                    <div className='col-md-12'>               
+                        {hardware.map((item)=>{
+                        return(
+                            <div className='row' key={item._id}>
+                            <div className='col-md-2 hardwareSetName'>
+                                {item.name}
+                            </div>
+                            <div className='col-md-3'>
+                                <TextField
+                                    label='Capacity'
+                                    value = {item.capacity}
+                                    name='capacity'
+                                    readOnly                           
+                                />
+                            </div>
+                            <div className='col-md-3'>
+                                <TextField
+                                    label='Available'
+                                    value = {item.capacity - item.checkedOut}
+                                    name='Available'
+                                    readOnly
+                                />
+                            </div>
+                            <div className='col-md-3'>
+                                <TextField
+                                    label='Request'
+                                    required
+                                    value = {item.availability}
+                                    name='Request'
+                                    onChange={(e)=>updateRequest(e, item._id)}      
+                                />
+                            </div>
+                        </div>
+                        )
+                        })}
                     </div>
-                  )
-                })}
-              </div>
+                </div>
+                <div className='row hwSetButtons'>
+                    <Button className="hwSetButton" variant='outlined' onClick={checkIn}>Check in</Button>
+                    <Button className="hwSetButton" variant='outlined' onClick={checkOut}>Check out</Button>
+                </div>
+                    <br></br>                     
+                </div>
             </div>
-            <div className='row hwSetButtons'>
-              <Button className="hwSetButton" variant='outlined' onClick={checkIn}>Check in</Button>
-              <Button className="hwSetButton" variant='outlined' onClick={checkOut}>Check out</Button>
-            </div>
-            <br></br>                     
-          </div>
-      </div>
-  </div>
+        </div>
+        :
+        <>
+            <h2 style={{color: 'white'}}>Please Log In</h2>
+            <Button variant='contained' onClick={() => navigate('/')}>Return to Login</Button>
+        </>}
+    </>
   );
 }
 
