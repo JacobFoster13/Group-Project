@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { TextField } from '@fluentui/react';
-//import { Button} from '@fluentui/react-components';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 import { DataGrid } from '@mui/x-data-grid';
@@ -26,15 +25,10 @@ function ProjectPage() {
 
   const navigate = useNavigate();
   let {state} = useLocation();
-
-  const [userProjects, setUserProjects] = useState([]);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    if(state == null){
-      navigate('/')
-    }
-    else{
+    if (state !== null) {
       // Function to fetch user projects from Flask server
       const fetchUserProjects = async () => {
         try {
@@ -44,7 +38,7 @@ function ProjectPage() {
             }
           });
           console.log(response.data);
-          setUserProjects(response.data);
+          setRows(response.data);
         } catch (error) {
           console.error('Error fetching user projects:', error);
         }
@@ -52,14 +46,7 @@ function ProjectPage() {
       // Call the function to fetch user projects when the component mounts
       fetchUserProjects();
     }    
-  }, []);
-
-  // Update the rows state after userProjects has been fetched
-  useEffect(() => {
-    setRows(userProjects);
-  }, [userProjects]);
-
-  console.log(userProjects);
+  }, [state]);
 
   const columns = [
     { field: 'id', headerName: 'Project ID', width: 200, 
@@ -138,7 +125,10 @@ function ProjectPage() {
     .then((response) => {
         if (response.status === 200) {
             console.log(response.data);
-            navigate('/hardwareSets')
+            // this needs to be altered to include state if this is the user flow we want to use
+            // navigate('/hardwareSets')
+            alert('Project successfully created')
+            window.location.reload(false)
         }
     })
   }
@@ -153,78 +143,86 @@ function ProjectPage() {
   }
 
   return (
-    <div className="container projectContainer">  
-        <div className="row">  
-          <div className='col-md-12'>
-            <div className='row'>
-              <h2 className='projectHeading'>WELCOME TO YOUR PROJECTS DASHBOARD</h2>
-            </div>
-            <div className="row">
-              <div className='col-md-4'>
+    <>
+      {state !== null ?
+        <div className="container projectContainer">  
+            <div className="row">  
+            <div className='col-md-12'>
                 <div className='row'>
-                  <TextField
-                    label='Enter Project ID'
-                    required
-                    value = {project.projectID}
-                    name='projectID'
-                    onChange={(e)=> handleChange(e)}                
-                  />
+                <h2 className='projectHeading'>WELCOME TO YOUR PROJECTS DASHBOARD</h2>
                 </div>
-              </div>
-              <div className='col-md-2'>
-                <br></br>
+                <div className="row">
+                <div className='col-md-4'>
+                    <div className='row'>
+                    <TextField
+                        label='Enter Project ID'
+                        required
+                        value = {project.projectID}
+                        name='projectID'
+                        onChange={(e)=> handleChange(e)}                
+                    />
+                    </div>
+                </div>
+                <div className='col-md-2'>
+                    <br></br>
+                    <div className='row'>
+                    <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={joinProject}>Join Project</Button>              
+                    </div>    
+                </div>   
+                </div>
                 <div className='row'>
-                  <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={joinProject}>Join Project</Button>              
-                </div>    
-              </div>   
+                <div className='col-md-4'>               
+                    <br></br>
+                    <div style={{marginTop: '1rem'}}>
+                    <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={openModal}>Create Project</Button>              
+                    </div>                  
+                </div>
+                </div>
+                <br></br>            
+                <div className='row'>
+                <div className='col-md-8 dataTable'>
+                    <DataGrid rows={rows} columns={columns} pageSize={2} />          
+                </div>              
+                </div>            
+                <div className='row'>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                >                
+                    <h4>Please enter below details to create a new project</h4>
+                    <form>
+                    <TextField
+                        label='Project Name'
+                        required
+                        value={project.projectName}
+                        name='projectName'
+                        onChange={(e)=>handleChange(e)}
+                    />
+                    <TextField
+                        label='Project Description'
+                        required
+                        multiline
+                        value={project.projectDescription}
+                        name='projectDescription'
+                        onChange={(e)=>handleChange(e)}
+                    />         
+                    <br></br>                          
+                    <Button variant='outlined' onClick={createProject}>Create Project</Button>
+                    </form>
+                </Modal>
+                </div>
             </div>
-            <div className='row'>
-              <div className='col-md-4'>               
-                <br></br>
-                <div style={{marginTop: '1rem'}}>
-                  <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={openModal}>Create Project</Button>              
-                </div>                  
-              </div>
-            </div>
-            <br></br>            
-            <div className='row'>
-              <div className='col-md-8 dataTable'>
-                <DataGrid rows={rows} columns={columns} pageSize={2} />          
-              </div>              
-            </div>            
-            <div className='row'>
-              <Modal
-                isOpen={modalIsOpen}
-                onAfterOpen={afterOpenModal}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Example Modal"
-              >                
-                <h4>Please enter below details to create a new project</h4>
-                <form>
-                  <TextField
-                    label='Project Name'
-                    required
-                    value={project.projectName}
-                    name='projectName'
-                    onChange={(e)=>handleChange(e)}
-                  />
-                  <TextField
-                    label='Project Description'
-                    required
-                    multiline
-                    value={project.projectDescription}
-                    name='projectDescription'
-                    onChange={(e)=>handleChange(e)}
-                  />         
-                  <br></br>                          
-                  <Button variant='outlined' onClick={createProject}>Create Project</Button>
-                </form>
-              </Modal>
-            </div>
-          </div>
-      </div>
-  </div>
+        </div>
+    </div>
+    :
+    <>
+        <h2 style={{color: 'white'}}>Please Log In</h2>
+        <Button variant='contained' onClick={() => navigate('/')}>Return to Login</Button>
+    </>}
+  </>
   );
 }
 
