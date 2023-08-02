@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { TextField } from '@fluentui/react';
 //import { Button} from '@fluentui/react-components';
 import Button from '@mui/material/Button';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 
 function HardwareSets() {
-
+  const navigate = useNavigate();
   let {state} = useLocation();
-  console.log(state);
 
+  console.log(state);
   const [hwSets, setHWSets] = useState({
     projectID: '',
     projectsData: [],
@@ -21,6 +21,14 @@ function HardwareSets() {
     hwSet2: []
   });
 
+  useEffect(() => {
+    if(state == null){
+      navigate('/')
+    }
+    else{
+      //Code for hardware sets
+    }    
+  }, []);
 
   function handleChange(event){
     setHWSets( prevValues => {
@@ -47,15 +55,15 @@ function HardwareSets() {
         <div className="row">  
           <div className='col-md-12'>
             <div className='row'>
-              <h2 className='hwSetsHeading'>PROJECT NAME: {state.projectName}</h2>
-              <h3 className='hwSetsHeading'>PROJECT ID: {state.projectId}</h3>
+              <h2 className='hwSetsHeading'>PROJECT NAME: {state == null? '' : state.projectName}</h2>
+              <h3 className='hwSetsHeading'>PROJECT ID: {state == null? '' : state.projectId}</h3>
             </div>
             <div className='row'>
               <div className='hardwareSetContainer'>
                 <TextField
                   label='Project Description:'
                   required
-                  value = {state.projectDescription}
+                  value = {state == null? '' : state.projectDescription}
                   name='projectDesc'
                   onChange={(e)=> handleChange(e)}       
                   disabled
