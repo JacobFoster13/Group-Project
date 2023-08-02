@@ -70,8 +70,9 @@ function ProjectPage() {
     </Link>
     },
     { field: 'projectName', headerName: 'Project Name', width: 300 },
-    { field: 'hwSet1', headerName: 'Hardware Set 1', width: 150 },
-    { field: 'hwSet2', headerName: 'Hardware Set 2', width: 150 }
+    // commenting out until later
+    // { field: 'hwSet1', headerName: 'Hardware Set 1', width: 150 },
+    // { field: 'hwSet2', headerName: 'Hardware Set 2', width: 150 }
   ];
 
   const [project, setProject] = useState({
