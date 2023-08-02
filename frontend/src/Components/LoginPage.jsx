@@ -35,13 +35,26 @@ function LoginPage() {
 
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpenSignUp, setIsOpenSignUp] = useState(false);
 
   function openModal() {
     setIsOpen(true);
   }
 
+  function openModalSignUp(){
+    setIsOpenSignUp(true);
+  }
+
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
+  }
+
+  function afterOpenModalSignUp(){
+    //references
+  }
+
+  function closeModalSignUp(){
+    setIsOpenSignUp(false);
   }
 
   function closeModal() {
@@ -128,7 +141,58 @@ function LoginPage() {
             <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={verifyLoginDetails}>Login</Button>              
           </div><br></br>
           <div className='row'>
-            <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={openModal}>New user? Sign Up here</Button>              
+            <Button className='loginButtons' variant='outlined' style={{color:'white', border:'1px solid white'}} onClick={openModalSignUp}>New user? Sign Up here</Button>              
+            <Modal
+                open={modalIsOpenSignUp}
+                onClose={closeModalSignUp}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >   
+                <Box sx={customStyles}>
+                  <h4>Please enter below details to create account</h4>
+                  <form>
+                    <TextField
+                      label='Login Name'
+                      required
+                      value={user.loginName}
+                      name='loginName'
+                      onChange={(e)=>handleChange(e)}
+                    />
+                    <TextField
+                      label='First Name'
+                      required
+                      value={user.firstName}
+                      name='firstName'
+                      onChange={(e)=>handleChange(e)}
+                    />
+                    <TextField
+                      label='Last Name'
+                      required
+                      value={user.lastName}
+                      name='lastName'
+                      onChange={(e)=>handleChange(e)}
+                    />
+                    <TextField
+                      label='Email'
+                      required
+                      value={user.email}
+                      type='email'
+                      name='email'
+                      onChange={(e)=>handleChange(e)}
+                    />
+                    <TextField
+                      label='Password'
+                      required
+                      value={user.password}
+                      type='password'
+                      name='password'
+                      onChange={(e)=>handleChange(e)}
+                    />
+                    <br></br>
+                    <Button variant='outlined' onClick={saveLoginDetails}>Sign Up</Button>
+                  </form>
+                </Box>                             
+              </Modal>
           </div>
         </div>
         <div className='col-md-4'></div>                
