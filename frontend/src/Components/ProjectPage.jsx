@@ -31,23 +31,27 @@ function ProjectPage() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    // Function to fetch user projects from Flask server
-    const fetchUserProjects = async () => {
-      try {
-        const response = await axios.post('/get_user_projects/', {
-          params: {
-            user: state.userId
-          }
-        });
-        console.log(response.data)
-        setUserProjects(response.data);
-      } catch (error) {
-        console.error('Error fetching user projects:', error);
-      }
-    };
-
-    // Call the function to fetch user projects when the component mounts
-    fetchUserProjects();
+    if(state == null){
+      navigate('/')
+    }
+    else{
+      // Function to fetch user projects from Flask server
+      const fetchUserProjects = async () => {
+        try {
+          const response = await axios.post('/get_user_projects/', {
+            params: {
+              user: state.userId
+            }
+          });
+          console.log(response.data);
+          setUserProjects(response.data);
+        } catch (error) {
+          console.error('Error fetching user projects:', error);
+        }
+      };
+      // Call the function to fetch user projects when the component mounts
+      fetchUserProjects();
+    }    
   }, []);
 
   // Update the rows state after userProjects has been fetched
@@ -61,7 +65,7 @@ function ProjectPage() {
     { field: 'id', headerName: 'Project ID', width: 200, 
       renderCell: (params) => 
       <Link to="/hardwareSets" state= {{projectId: params.row.id,
-        userId: state.userId, projectName:params.row.projectName, projectDescription:params.row.projectDescription}} className="projectLink">
+        userId: state == null? '' : state.userId, projectName:params.row.projectName, projectDescription:params.row.projectDescription}} className="projectLink">
       {params.row.id}
     </Link>
     },
@@ -75,7 +79,7 @@ function ProjectPage() {
     projectName: '',
     projectDescription: '',
     projectUsers : [],
-    loginName: state.userId
+    loginName: state == null? '' : state.userId
   });
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -95,7 +99,7 @@ function ProjectPage() {
     // Call the API endpoint to join the project using axios
     axios.post('/join_project/', {
       params: {
-        user: state.userId, // Replace with the actual user ID
+        user: state == null ? '' : state.userId, // Replace with the actual user ID
         projectID: project.projectID
       }
     })
