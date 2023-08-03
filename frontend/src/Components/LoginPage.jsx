@@ -74,7 +74,7 @@ function LoginPage() {
     .then((response) => {
       if (response.status === 200) {
         if (response.data.Message === 'ConfirmKey') {
-            navigate('/ProjectsPage', { state: { userId: user.loginName } })
+            navigate('/ProjectPage', { state: { userId: user.loginName } })
         } else {
             alert(response.data.Message)
             window.location.reload(false)

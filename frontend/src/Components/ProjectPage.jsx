@@ -97,16 +97,7 @@ function ProjectPage() {
       alert(data.Message); // Show a message with the server response
       // If the join was successful, update the rows state to refresh the table
       if (data.Message === 'User successfully joined the project') {
-        setRows(prevRows => [
-          ...prevRows,
-          {
-            id: prevRows.length + 1,
-            projectID: project.projectID,
-            projectName: 'Project Name', // Replace with the actual project name
-            hwSet1: '200',
-            hwSet2: '230'
-          }
-        ]);
+        window.location.reload(false);
       }
     })
     .catch(error => {
