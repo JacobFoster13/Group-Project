@@ -73,8 +73,12 @@ function LoginPage() {
     })
     .then((response) => {
       if (response.status === 200) {
-        console.log(response.data);
-        window.location.href = "/";
+        if (response.data.Message === 'ConfirmKey') {
+            navigate('/ProjectsPage', { state: { userId: user.loginName } })
+        } else {
+            alert(response.data.Message)
+            window.location.reload(false)
+        };
       }
     })
   }
@@ -89,7 +93,7 @@ function LoginPage() {
     .then((response) => {
       if (response.status === 200) {
         console.log(response.data);
-        if (response.data['Message'] === "Access Denied") {
+        if (response.data['Message'] !== "ConfirmKey") {
           setIsOpen(true);
         } else {
           navigate('/ProjectPage', { state: { userId: user.loginName } });
