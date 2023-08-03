@@ -74,6 +74,7 @@ function LoginPage() {
     .then((response) => {
       if (response.status === 200) {
         console.log(response.data);
+        window.location.href = "/";
       }
     })
   }
@@ -107,12 +108,13 @@ function LoginPage() {
   }
 
   return (
-    <div className="container loginContainer">
+    <div className="container">
       <div className="row">  
-        <div className='col-md-4'></div>
-        <div className='col-md-4 loginScreen'>
+        <div className='col-md-3'></div>
+        <div className='col-md-6 loginScreen'>
+
           <div className='row'>
-            <h3 style={{color: 'white'}}>Sign In to access the APAD Project</h3>
+            <h3 style={{color: 'white', textAlign: 'center'}}>Sign In to access the APAD Project</h3>
           </div>
           <div className="row">
             <FaCartArrowDown size={100} style={{color: 'white', marginTop:'2rem'}}/>
@@ -195,7 +197,7 @@ function LoginPage() {
               </Modal>
           </div>
         </div>
-        <div className='col-md-4'></div>                
+        <div className='col-md-3'></div>                
       </div>
       <Modal
         open={modalIsOpen}

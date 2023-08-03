@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import './../App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { TextField } from '@fluentui/react';
+import { Label, TextField } from '@fluentui/react';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 import { DataGrid } from '@mui/x-data-grid';
@@ -181,7 +181,8 @@ function ProjectPage() {
                 <br></br>            
                 <div className='row'>
                 <div className='col-md-8 dataTable'>
-                    <DataGrid rows={rows} columns={columns} pageSize={2} />          
+                  {rows.length > 0 ? <DataGrid rows={rows} columns={columns} pageSize={2}/>: <Label>No Projects Found</Label>}
+                    
                 </div>              
                 </div>            
                 <div className='row'>
@@ -218,10 +219,10 @@ function ProjectPage() {
         </div>
     </div>
     :
-    <>
-        <h2 style={{color: 'white'}}>Please Log In</h2>
+    <div className="loginMessage">
+        <h2 style={{color: 'white'}}>Please log in to access the projects dashboard</h2>
         <Button variant='contained' onClick={() => navigate('/')}>Return to Login</Button>
-    </>}
+    </div>}
   </>
   );
 }

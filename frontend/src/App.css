@@ -8,17 +8,21 @@
 a{
   color: white !important;
 }
-.loginContainer{
+.bannerImage{
   background-image: url("./Images/ReactBackGround.avif");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-
+  height: 3rem;
 }
+
 .loginButtons{
   width: 20rem;
 }
 .loginScreen{
-  padding: 5rem;
+  margin: 5rem 0rem !important;
+  padding: 3rem !important;
+  border: 2px solid white;
+  border-radius: 0.5rem;
 }
 .textBox{
   margin: 1rem;
@@ -111,6 +115,10 @@ a{
   border-radius: 1rem;
   margin-top: 2rem !important;
   margin-left: 1rem;
+}
+
+.dataTable > .ms-Label{
+  color: black !important;
 }
 
 @keyframes App-logo-spin {
