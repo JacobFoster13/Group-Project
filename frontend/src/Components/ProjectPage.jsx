@@ -142,12 +142,19 @@ function ProjectPage() {
     }
   }
 
+  function logoutUser(){
+    navigate("/");
+  }
+
   return (
     <>
       {state !== null ?
         <div className="container projectContainer">  
             <div className="row">  
             <div className='col-md-12'>
+                <div className='row logoutButton'>                  
+                  <Button variant='outlined' onClick={logoutUser}>Logout</Button>
+                </div>
                 <div className='row'>
                 <h2 className='projectHeading'>WELCOME TO YOUR PROJECTS DASHBOARD</h2>
                 </div>

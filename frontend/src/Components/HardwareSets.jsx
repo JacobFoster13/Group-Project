@@ -66,6 +66,10 @@ function HardwareSets() {
     })
   }
 
+  function logoutUser(){
+    navigate("/");
+  }
+
   return (
     <>
         {
@@ -73,6 +77,9 @@ function HardwareSets() {
             <div className="container hwSetsContainer">  
                 <div className="row">  
                     <div className='col-md-12'>
+                        <div className='row logoutButton'>                  
+                          <Button variant='outlined' onClick={logoutUser}>Logout</Button>
+                        </div>
                         <div className='row'>
                             <h2 className='hwSetsHeading'>PROJECT NAME: {state == null? '' : state.projectName}</h2>
                             <h3 className='hwSetsHeading'>PROJECT ID: {state == null? '' : state.projectId}</h3>

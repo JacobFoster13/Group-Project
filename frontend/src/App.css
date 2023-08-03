@@ -18,6 +18,17 @@ a{
 .loginButtons{
   width: 20rem;
 }
+.logoutButton{
+  width: 6rem;
+  border: 2px solid white;
+  position: absolute;
+  right: 3rem;
+}
+
+.logoutButton > .MuiButton-root{
+  color: white;
+  font-weight: 600;
+}
 .loginScreen{
   margin: 5rem 0rem !important;
   padding: 3rem !important;
