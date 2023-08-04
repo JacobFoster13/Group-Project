@@ -192,7 +192,6 @@ def manageHardware():
         # get and set user data from client
         data = dict(request.get_json())
         user, req, project, operation = data['user'], data['request'], data['project'], data['operation']
-        print(user)
         # logic path for returning hardware
         if operation == 'return':
             for hw in req:
@@ -207,7 +206,6 @@ def manageHardware():
                     print('proj_hw:', proj_hw)
                     # iterate through the hardware sets to find the one corresponding to the request
                     for i in proj_hw:
-                        # print(list(i.keys())[0])
                         if int(i['id']) == int(hw):
                             # check if user is returning more hardware than checked out
                             if int(i['amt']) < int(req[hw]):
