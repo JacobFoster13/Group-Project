@@ -11,11 +11,8 @@ import certifi
 
 ca=certifi.where()
 
-load_dotenv()
-DB_STRING = os.getenv("DB_STRING")
-
 app = Flask(__name__)
-client = pymongo.MongoClient(DB_STRING, tlsCAFile=ca)
+client = pymongo.MongoClient('mongodb+srv://jacob13:jacobapad@cluster0.5hlginn.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client['pythonTest']
 CORS(app)
 
