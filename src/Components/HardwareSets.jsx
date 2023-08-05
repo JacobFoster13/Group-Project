@@ -15,7 +15,7 @@ function HardwareSets() {
 
   useEffect(() => {
     if (state !== null) {
-      axios.get('/hardware/')
+      axios.get('http://127.0.0.1:5000/hardware/')
       .then((response) => {
         if (response.status === 200) {
             setHardware(response.data)
@@ -33,7 +33,7 @@ function HardwareSets() {
   }
 
   function checkIn(){
-    axios.post('/manageHardware/', {
+    axios.post('http://127.0.0.1:5000/manageHardware/', {
         user: state.userId,
         request: request,
         project: state.projectId,
@@ -50,7 +50,7 @@ function HardwareSets() {
   }
 
   function checkOut(){
-    axios.post('/manageHardware/', {
+    axios.post('http://127.0.0.1:5000/manageHardware/', {
         user: state.userId,
         request: request,
         project: state.projectId,

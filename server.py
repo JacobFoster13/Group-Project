@@ -11,13 +11,17 @@ import certifi
 
 ca=certifi.where()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./build', static_url_path='/')
 client = pymongo.MongoClient('mongodb+srv://jacob13:jacobapad@cluster0.5hlginn.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client['pythonTest']
 CORS(app)
 
 def return_json(message):
     return json.dumps({"Message": str(message)}, indent=4)
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @app.route("/login/", methods=["POST"])
 def login():

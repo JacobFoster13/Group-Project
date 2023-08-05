@@ -62,7 +62,7 @@ function LoginPage() {
   }
 
   function saveLoginDetails () {
-    axios.post('/signup/', {
+    axios.post('http://127.0.0.1:5000/signup/', {
       params: {
         user: user.loginName,
         first: user.firstName,
@@ -84,7 +84,7 @@ function LoginPage() {
   }
 
   function verifyLoginDetails () {
-    axios.post('/login/', {
+    axios.post('http://127.0.0.1:5000/login/', {
       params: {
         user: user.loginName,
         password: user.password

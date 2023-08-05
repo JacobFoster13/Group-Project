@@ -32,7 +32,7 @@ function ProjectPage() {
       // Function to fetch user projects from Flask server
       const fetchUserProjects = async () => {
         try {
-          const response = await axios.post('/get_user_projects/', {
+          const response = await axios.post('http://127.0.0.1:5000/get_user_projects/', {
             params: {
               user: state.userId
             }
@@ -85,7 +85,7 @@ function ProjectPage() {
 
   function joinProject() {
     // Call the API endpoint to join the project using axios
-    axios.post('/join_project/', {
+    axios.post('http://127.0.0.1:5000/join_project/', {
       params: {
         user: state == null ? '' : state.userId, // Replace with the actual user ID
         projectID: project.projectID
@@ -107,7 +107,7 @@ function ProjectPage() {
   }
 
   function createProject(){
-    axios.post('/projects/', {
+    axios.post('http://127.0.0.1:5000/projects/', {
         projectName: project.projectName,
         projectDescription: project.projectDescription,
         creator: project.loginName,
