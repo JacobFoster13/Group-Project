@@ -62,7 +62,7 @@ function LoginPage() {
   }
 
   function saveLoginDetails () {
-    axios.post('http://127.0.0.1:5000/signup/', {
+    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/signup/', {
       params: {
         user: user.loginName,
         first: user.firstName,
@@ -84,7 +84,7 @@ function LoginPage() {
   }
 
   function verifyLoginDetails () {
-    axios.post('http://127.0.0.1:5000/login/', {
+    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/login/', {
       params: {
         user: user.loginName,
         password: user.password

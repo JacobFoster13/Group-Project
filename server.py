@@ -247,4 +247,4 @@ def manageHardware():
                 return return_json("You may not check out more resources than are available")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False, host='https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/', port=os.environ.get('PORT', 443))

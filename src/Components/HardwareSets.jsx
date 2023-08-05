@@ -33,7 +33,7 @@ function HardwareSets() {
   }
 
   function checkIn(){
-    axios.post('http://127.0.0.1:5000/manageHardware/', {
+    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/manageHardware/', {
         user: state.userId,
         request: request,
         project: state.projectId,
@@ -50,7 +50,7 @@ function HardwareSets() {
   }
 
   function checkOut(){
-    axios.post('http://127.0.0.1:5000/manageHardware/', {
+    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/manageHardware/', {
         user: state.userId,
         request: request,
         project: state.projectId,
