@@ -6,9 +6,12 @@ import certifi
 ca=certifi.where()
 
 def main():
+    load_dotenv()
+    DB_STRING = os.getenv("DB_STRING")
+    DB = os.getenv("DB")
     # establish connection and create database
-    client = pymongo.MongoClient('mongodb+srv://jacob13:jacobapad@cluster0.5hlginn.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
-    db = client['pythonTest']
+    client = pymongo.MongoClient(DB_STRING, tlsCAFile=ca)
+    db = client[DB]
 
     # input user data to users collection
     user_col = db['users']

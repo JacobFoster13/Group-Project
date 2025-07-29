@@ -10,10 +10,14 @@ import passwordEncrypt
 import certifi
 
 ca=certifi.where()
+load_dotenv()
+DB_STRING = os.getenv("DB_STRING")
+DB = os.getenv("DB")
+HOST = os.getenv("HOST")
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
-client = pymongo.MongoClient('mongodb+srv://jacob13:jacobapad@cluster0.5hlginn.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
-db = client['pythonTest']
+client = pymongo.MongoClient(DB_STRING, tlsCAFile=ca)
+db = client[DB]
 CORS(app)
 
 def return_json(message):
@@ -247,4 +251,4 @@ def manageHardware():
                 return return_json("You may not check out more resources than are available")
 
 if __name__ == "__main__":
-    app.run(debug=False, host='https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/', port=os.environ.get('PORT', 443))
+    app.run(debug=False, host=HOST, port=os.environ.get('PORT', 443))
