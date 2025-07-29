@@ -15,7 +15,7 @@ function HardwareSets() {
 
   useEffect(() => {
     if (state !== null) {
-      axios.get('http://127.0.0.1:5000/hardware/')
+      axios.get('https://inventory-management-msitm-2d162cb631e2.herokuapp.com/hardware/')
       .then((response) => {
         if (response.status === 200) {
             setHardware(response.data)
@@ -33,7 +33,7 @@ function HardwareSets() {
   }
 
   function checkIn(){
-    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/manageHardware/', {
+    axios.post('https://inventory-management-msitm-2d162cb631e2.herokuapp.com/manageHardware/', {
         user: state.userId,
         request: request,
         project: state.projectId,
@@ -50,7 +50,7 @@ function HardwareSets() {
   }
 
   function checkOut(){
-    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/manageHardware/', {
+    axios.post('https://inventory-management-msitm-2d162cb631e2.herokuapp.com/manageHardware/', {
         user: state.userId,
         request: request,
         project: state.projectId,

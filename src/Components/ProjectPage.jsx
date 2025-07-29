@@ -32,7 +32,7 @@ function ProjectPage() {
       // Function to fetch user projects from Flask server
       const fetchUserProjects = async () => {
         try {
-          const response = await axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/get_user_projects/', {
+          const response = await axios.post('https://inventory-management-msitm-2d162cb631e2.herokuapp.com/get_user_projects/', {
             params: {
               user: state.userId
             }
@@ -85,7 +85,7 @@ function ProjectPage() {
 
   function joinProject() {
     // Call the API endpoint to join the project using axios
-    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/join_project/', {
+    axios.post('https://inventory-management-msitm-2d162cb631e2.herokuapp.com/join_project/', {
       params: {
         user: state == null ? '' : state.userId, // Replace with the actual user ID
         projectID: project.projectID
@@ -107,7 +107,7 @@ function ProjectPage() {
   }
 
   function createProject(){
-    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/projects/', {
+    axios.post('https://inventory-management-msitm-2d162cb631e2.herokuapp.com/projects/', {
         projectName: project.projectName,
         projectDescription: project.projectDescription,
         creator: project.loginName,

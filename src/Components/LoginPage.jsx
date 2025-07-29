@@ -62,7 +62,7 @@ function LoginPage() {
   }
 
   function saveLoginDetails () {
-    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/signup/', {
+    axios.post('https://inventory-management-msitm-2d162cb631e2.herokuapp.com/signup/', {
       params: {
         user: user.loginName,
         first: user.firstName,
@@ -84,7 +84,7 @@ function LoginPage() {
   }
 
   function verifyLoginDetails () {
-    axios.post('https://enigmatic-springs-45040-ac45c9b69f08.herokuapp.com/login/', {
+    axios.post('https://inventory-management-msitm-2d162cb631e2.herokuapp.com/login/', {
       params: {
         user: user.loginName,
         password: user.password
@@ -118,7 +118,7 @@ function LoginPage() {
         <div className='col-md-6 loginScreen'>
 
           <div className='row'>
-            <h3 style={{color: 'white', textAlign: 'center'}}>Sign In to access the APAD Project</h3>
+            <h3 style={{color: 'white', textAlign: 'center'}}>Inventory Management System</h3>
           </div>
           <div className="row">
             <FaCartArrowDown size={100} style={{color: 'white', marginTop:'2rem'}}/>
